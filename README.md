@@ -3,123 +3,155 @@
 **IBM SkillsBuild Data Analytics with AI Academic Internship Program**  
 *Conducted by BharatCares in association with AICTE*  
 **Candidate Name:** Sameeksha  
+**Email:** sameekshauniyal05@gmail.com  
+
+---
+
+## Submission Files
+
+As per BharatCares submission requirements, the following four files are submitted:
+
+| # | File | Format | Description |
+|---|------|--------|-------------|
+| 1 | `Sameeksha_StudentPerformancePrediction.ipynb` | `.ipynb` (Jupyter Notebook) | Complete project code -- executed with all outputs |
+| 2 | `requirements.txt` | `.txt` | Python libraries/dependencies required to run the project |
+| 3 | `Sameeksha_StudentPerformancePrediction_ProjectReport.docx` | `.docx` (Microsoft Word) | Complete project documentation and report |
+| 4 | `README.md` | `.md` (Markdown) | Project overview, dataset link, technologies, setup instructions |
 
 ---
 
 ## Project Description
-This project presents an end-to-end Supervised Machine Learning regression pipeline designed to predict students' final academic performance (Final Grade `G3` on a 0–20 scale) based on demographic attributes, socioeconomic background, study habits, school attendance, and historical examination scores. The project follows best practices in exploratory data analysis (EDA), data cleaning, feature preprocessing, ensemble model training, and empirical evaluation.
 
-## Objective
-The primary objective of this project is to build an accurate and interpretable predictive model that enables educational institutions, instructors, and parents to identify at-risk students well before final examinations occur, thereby facilitating timely academic intervention and personalized tutoring.
+A full-stack Machine Learning web application that predicts a student's final academic grade (`G3`, scale 0-20) based on 32 input features including demographic background, study habits, family support, and historical exam scores.
+
+- **Backend:** Flask REST API  
+- **Frontend:** React (Vite)  
+- **ML Model:** Random Forest Regressor (scikit-learn)  
+- **Dataset:** [`data/student-mat.csv`](https://www.kaggle.com/datasets/uciml/student-alcohol-consumption) (395 samples)
+
+---
 
 ## Dataset
-- **Kaggle Dataset Name:** Student Performance Data Set / Student Alcohol Consumption
-- **Actual Kaggle Dataset Link:** [https://www.kaggle.com/datasets/uciml/student-alcohol-consumption](https://www.kaggle.com/datasets/uciml/student-alcohol-consumption)
-- **Alternate Kaggle Reference:** [https://www.kaggle.com/datasets/whenamancodes/student-performance](https://www.kaggle.com/datasets/whenamancodes/student-performance)
-- **Dataset Dimensions:** 395 rows, 33 columns
-- **Important Features:**
-  - `G1`, `G2`: First and second period exam grades (0–20 scale)
-  - `studytime`: Weekly study hours (1: <2h, 2: 2–5h, 3: 5–10h, 4: >10h)
-  - `failures`: Number of past class failures (0 to 4)
-  - `absences`: Total number of school absences (0 to 93)
-  - `Medu`, `Fedu`: Mother and father education level (0 to 4)
-  - `schoolsup`, `famsup`: Extra school and family educational support (yes/no)
-  - `higher`: Aspiration to pursue higher education (yes/no)
-- **Target Variable:** `G3` (Final continuous grade on a 0–20 scale)
+
+- **Kaggle Dataset:** [Student Performance Data Set / Student Alcohol Consumption](https://www.kaggle.com/datasets/uciml/student-alcohol-consumption)  
+- **Alternate Reference:** [https://www.kaggle.com/datasets/whenamancodes/student-performance](https://www.kaggle.com/datasets/whenamancodes/student-performance)  
+- **Dimensions:** 395 rows x 33 columns  
+- **Target Variable:** `G3` -- Final continuous grade (0-20 scale)  
+- **Key Features:** `G1`, `G2` (exam scores), `studytime`, `failures`, `absences`, `Medu`, `Fedu`, `higher`
+
+---
 
 ## Technologies Used
+
 - **Python 3.12**
-- **Pandas** (Data manipulation and encoding)
-- **NumPy** (Numerical operations)
-- **Matplotlib & Seaborn** (Data visualization and statistical plots)
-- **Scikit-learn** (Model training, train-test splitting, and evaluation metrics)
-- **Jupyter Notebook** (Interactive experimentation and pipeline execution)
+- **Pandas**, **NumPy** -- Data manipulation
+- **Matplotlib**, **Seaborn** -- Visualization
+- **Scikit-learn** -- Model training and evaluation
+- **Joblib** -- Model serialization
+- **Flask** -- REST API backend
+- **React + Vite** -- Frontend UI
+- **Jupyter Notebook** -- Interactive ML pipeline
+
+---
 
 ## Machine Learning Model
-- **Algorithm Selected:** `RandomForestRegressor` (`n_estimators=100`, `random_state=42`)
-- **Task Type:** Supervised Regression (predicting continuous final grade `G3`)
-- **Why Random Forest was Selected:**
-  - Reduces variance and prevents overfitting through ensemble averaging across 100 decision trees.
-  - Effectively models non-linear relationships and interactions between behavioral and academic features.
-  - Provides built-in feature importance rankings to assist educational stakeholders.
 
-## Project Workflow
-```
-Dataset Acquisition
-       ↓
-Data Cleaning & Missing Value Verification
-       ↓
-Exploratory Data Analysis (EDA & Visualizations)
-       ↓
-Data Preprocessing (One-Hot Categorical Encoding)
-       ↓
-Train-Test Split (80% Train, 20% Test, random_state=42)
-       ↓
-Model Training (Random Forest Regressor)
-       ↓
-Model Evaluation (MAE, MSE, RMSE, R² Score)
-       ↓
-Sample Test Predictions & Residual Analysis
-```
+- **Algorithm:** `RandomForestRegressor` (`n_estimators=100`, `random_state=42`, `n_jobs=-1`)
+- **Encoding:** `pd.get_dummies(df, drop_first=True)` (One-Hot Encoding)
+- **Split:** 80% Train / 20% Test (`random_state=42`)
+
+---
 
 ## Results
-The model was evaluated on the unseen test dataset (79 student records) yielding the following genuine performance metrics:
 
-| Metric | Obtained Value | Description |
-| :--- | :--- | :--- |
-| **Mean Absolute Error (MAE)** | **1.1646** | Average deviation of ~1.16 grade points on a 20-point scale |
-| **Mean Squared Error (MSE)** | **3.7977** | Average squared error across all test predictions |
-| **Root Mean Squared Error (RMSE)** | **1.9488** | Standard deviation of prediction residuals |
-| **R² Score (Variance Explained)** | **0.8148 (81.48%)** | Explains over 81.48% of total variance in final grades |
+| Metric | Value |
+|--------|-------|
+| **R2 Score** | **0.8148** (81.48% variance explained) |
+| **MAE** | **1.1646** points |
+| **MSE** | **3.7977** |
+| **RMSE** | **1.9488** |
 
-### Sample Predictions Comparison:
-| Student # | Actual Grade (G3) | Predicted Grade | Absolute Error |
-| :---: | :---: | :---: | :---: |
-| 1 | 10.0 | 8.32 | 1.68 |
-| 2 | 12.0 | 11.78 | 0.22 |
-| 3 | 5.0 | 6.50 | 1.50 |
-| 4 | 10.0 | 9.76 | 0.24 |
-| 5 | 9.0 | 8.80 | 0.20 |
+---
+
+## Project Workflow
+
+```
+Dataset Acquisition (Kaggle/UCI)
+       |
+Data Cleaning and Missing Value Check
+       |
+Exploratory Data Analysis (EDA and Visualizations)
+       |
+Data Preprocessing (One-Hot Encoding)
+       |
+Train-Test Split (80/20, random_state=42)
+       |
+Model Training (RandomForestRegressor)
+       |
+Model Evaluation (MAE, MSE, RMSE, R2)
+       |
+Model Saved -> Flask API -> React Frontend
+```
+
+---
 
 ## How to Run
 
-### 1. Clone/Download the Repository
-```bash
-git clone <repository-url>
-cd project_sameeksha
-```
-
-### 2. Install Dependencies
+### 1. Install Dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### 3. Start Jupyter Notebook
+### 2. Run Jupyter Notebook (ML Pipeline)
 ```bash
-jupyter notebook
+jupyter notebook Sameeksha_StudentPerformancePrediction.ipynb
 ```
 
-### 4. Open and Run the Notebook
-- Open `Sameeksha_StudentPerformancePrediction.ipynb`
-- Click **Kernel → Restart & Run All** to execute all cells.
+### 3. Start Flask Backend
+```bash
+python backend/app.py
+```
+
+### 4. Start React Frontend
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+Open **http://127.0.0.1:3000** in your browser.
+
+---
 
 ## Project Structure
+
 ```
 project_sameeksha/
-│
-├── data/
-│   └── student-mat.csv                                  # Authentic Kaggle/UCI Dataset (395 records)
-│
-├── figures/                                             # High-resolution generated plots
-│   ├── fig1_target_distribution.png
-│   ├── fig2_correlation_heatmap.png
-│   ├── fig3_studytime_failures_vs_g3.png
-│   ├── fig4_actual_vs_predicted.png
-│   ├── fig5_feature_importance.png
-│   └── fig6_residual_distribution.png
-│
-├── Sameeksha_StudentPerformancePrediction.ipynb            # Fully executed Jupyter Notebook
-├── requirements.txt                                     # Python dependencies
-├── Sameeksha_StudentPerformancePrediction_ProjectReport.docx# Formal Internship Project Report
-└── README.md                                            # Project documentation and summary
+|
+|-- data/
+|   +-- student-mat.csv                                   # Dataset (395 records)
+|
+|-- figures/                                              # Generated EDA plots
+|   |-- fig1_target_distribution.png
+|   |-- fig2_correlation_heatmap.png
+|   |-- fig3_studytime_failures_vs_g3.png
+|   |-- fig4_actual_vs_predicted.png
+|   |-- fig5_feature_importance.png
+|   +-- fig6_residual_distribution.png
+|
+|-- backend/
+|   |-- app.py                                            # Flask REST API
+|   |-- train_model.py                                    # Model training script
+|   +-- model/student_performance_rf_model.joblib         # Saved model
+|
+|-- frontend/
+|   +-- src/App.jsx                                       # React UI
+|
+|-- models/
+|   +-- student_performance_rf_model.joblib               # Saved ML model
+|
+|-- Sameeksha_StudentPerformancePrediction.ipynb          # Jupyter Notebook (submission)
+|-- requirements.txt                                      # Dependencies (submission)
+|-- Sameeksha_StudentPerformancePrediction_ProjectReport.docx  # Report (submission)
++-- README.md                                             # This file (submission)
 ```
